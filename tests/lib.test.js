@@ -14,4 +14,11 @@ describe('absulate',()=>{
       const result=lib.absolute(0);
       expect(result).toBe(0);
      });      
-});    
+}); 
+describe("greet",()=>{
+  it('it should be greeting message',()=>{
+    const result=lib.greet("Jass");
+    //expect(result).toMatch('Welcome Jass');
+    expect(result).toContain('Welcome Jass');
+  });
+});   
