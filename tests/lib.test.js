@@ -22,3 +22,9 @@ describe("greet",()=>{
     expect(result).toContain('Welcome Jass');
   });
 });   
+describe('getcurrencies',()=>{
+  it(" should contain all available currencies",()=>{
+    const result=lib.getCurrencies();
+    expect(result).toEqual(expect.arrayContaining(['EUR','USD','AUD']));
+  });
+});
