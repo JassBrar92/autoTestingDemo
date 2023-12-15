@@ -39,3 +39,17 @@ describe('getProducts',()=>{
     //expect(result).toHaveProperty('id',1);
   });
 });
+
+describe('registerUser',()=>{
+  it(' should throw exception for falsy value',()=>{
+    const args=[null,NaN,false,'',undefined];
+    args.forEach(a=>{
+      expect(()=>{lib.registerUser(a)}).toThrow();
+    });
+  });
+  it(' should return user object',()=>{
+    const result=lib.registerUser('jass');
+    expect(result).toMatchObject({username:'jass'});
+    expect(result.id).toBeGreaterThan(0);
+  });
+});
