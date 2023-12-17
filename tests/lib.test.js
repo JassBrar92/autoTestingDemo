@@ -70,14 +70,23 @@ describe('applyDiscount',()=>{
 describe('notifyCustomer',()=>{
   it("should send email to customer",()=>
   {
-    db.getCustomerSync=function(customerId){
+    db.getCustomerSync=jest.fn().mockReturnValue({email:'a'});
+    /*db.getCustomerSync=function(customerId){
       return {email:'a'};
-    }
-    let emailSent=false;
+    }*/
+    
+    mail.send=jest.fn();
+    /*let emailSent=false;
     mail.send=function({email,message}){
     emailSent=true;
-    }
+    }*/
     lib.notifyCustomer({customerId:1});
-    expect(emailSent).toBe(true);
+ 
+    expect(mail.send).toHaveBeenCalled();
+    expect(mail.send.mock.calls[0][0]).toBe('a');
+    expect(mail.send.mock.calls[0][1]).toMatch(/order/);
+
+    //expect(emailSent).toBe(true);
+
   });
 });
