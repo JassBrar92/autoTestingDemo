@@ -1,4 +1,5 @@
 const lib=require('../lib');
+const db=require('../db');
 describe('absulate',()=>{
   it("should be positive number if input is positive number",()=>{
     const result=lib.absolute(1);
@@ -52,4 +53,14 @@ describe('registerUser',()=>{
     expect(result).toMatchObject({username:'jass'});
     expect(result.id).toBeGreaterThan(0);
   });
+});
+
+describe('should give 10% discount if customer has more than 10 points',()=>{
+  db.getCustomerSync=function(customerId){
+    console.log('Fake reading...');
+    return{id:customerId,points:20}
+  }
+  const order={id:1,totalPrice:10};
+  lib.applyDiscount(order);
+  expect(order.totalPrice).toBe(9);
 });
