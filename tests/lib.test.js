@@ -1,5 +1,6 @@
 const lib=require('../lib');
 const db=require('../db');
+const mail=require('../mail');
 describe('absulate',()=>{
   it("should be positive number if input is positive number",()=>{
     const result=lib.absolute(1);
@@ -64,5 +65,19 @@ describe('applyDiscount',()=>{
     const order={id:1,totalPrice:10};
     lib.applyDiscount(order);
     expect(order.totalPrice).toBe(9);
+  });
+});
+describe('notifyCustomer',()=>{
+  it("should send email to customer",()=>
+  {
+    db.getCustomerSync=function(customerId){
+      return {email:'a'};
+    }
+    let emailSent=false;
+    mail.send=function({email,message}){
+    emailSent=true;
+    }
+    lib.notifyCustomer({customerId:1});
+    expect(emailSent).toBe(true);
   });
 });
